@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head></head>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Air Pollution Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      background-color: #f5f5f5;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: #4caf50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .heading {
+      margin-bottom: 10px;
+      font-size: 36px;
+    }
+
+    .subheading {
+      font-size: 18px;
+    }
+
+    /* Card Styles */
+    .cards {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .card {
+      width: 22rem;
+      /* Increase the width to make the cards bigger */
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      /* Add a transition effect */
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      /* Increase the scale on hover to make the cards nicer */
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .card-text {
+      color: #555;
+    }
+
+    /* Form Styles */
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .form-container label {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .form-container button {
+      background-color: #4caf50;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-container button:hover {
+      background-color: #33333318;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+      width: 400px;
+      height: 50px;
+      margin: 20px auto;
+    }
+
+    #cityInput {
+      border: none;
+      outline: none;
+      font-size: 30px;
+      width: 100%;
+    }
+
+    .search-icon {
+      width: 20px;
+      height: 20px;
+      margin: 0 8px;
+      opacity: 0.5;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .search-icon:hover {
+      transform: rotate(360deg);
+      opacity: 1;
+    }
+
+    label {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+      outline: none;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      margin-right: 6px;
+    }
+
+    button:hover {
+      background-color: #33333318;
+    }
+
+    /* Pollution Data Styles */
+    .data {
+      margin-top: 20px;
+    }
+
+    .data h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    #pollution-data {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #pollution-data li {
+      margin-bottom: 10px;
+    }
+
+    /* Carousel Styles */
+    #carouselExampleIndicators {
+      margin-top: 20px;
+    }
+
+    /* Precautions Styles */
+    .Precautions {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      position: bottom;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .precaution-item {
+      margin-bottom: 15px;
+    }
+
+    /* Updated styles for the last section */
+    .precautions h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #4caf50;
+    }
+
+    .precautions h3 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .precautions p {
+      font-size: 16px;
+      color: #555;
+    }
+    /* by aditya */
+    .hero{
+        height: 5rem;
+        width: 100%;
+        background-color: #5c995e;
+        color: white;
+        font-weight: 700;
+        padding-left: 20px;
+        padding-top: 10px;
+      }
+      .carousel-inner{
+        height: 90vh;
+        width: 80%;
+        margin-left:10rem;
+        border-radius: 10px;
+        
+      }
+      .querry{
+        margin-left: 40%;
+        /* align-self: auto */
+        border-radius: 0.5rem;
+        
+      }
+      #query{
+        border-radius:0.5rem;
+        border: none;
+        background-color: #cccccca3;
+      }
+      #submit{
+        margin-left: 8rem;
+        margin-bottom: 0.5rem;
+      }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="heading">EcoGuard</div>
+    <div class="subheading">Air Pollution Tracker and Prevention</div>
+  </header>
+
+  <section class="cards">
+    <div class="card">
+      <img src="./scientist.jpg" class="card-img-top" alt="Nature Image" />
+      <div class="card-body">
+        <p class="card-text">
+          AQI prediction for upcoming days and for next peak hours of the day and provide localized recommendations based on the severity of pollution in different regions
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="./earth.jpg" class="card-img-top" alt="Nature Image" />
+      <div class="card-body">
+        <p class="card-text">
+          Promote public transportation to reduce the number of private vehicles on the road and encouraging use of non-polluting things        </p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="./factory-with-polluting-chimneys-scene-free-vector.jpg" class="card-img-top" alt="Nature Image" />
+      <div class="card-body">
+        <p class="card-text">
+          Alert messages will be provded to ensure potential health risk and Suggesting lifestyle adjustments, such as reducing outdoor activities during peak pollution times.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container Search">
+    <form id="cityForm">
+      <div class="search-container">
+        <input type="text" id="cityInput" name="cityInput" required placeholder="City" />
+        <button type="button" onclick="fetchDataForCity()">
+          <img src="search-icon.png" alt="Search Icon" class="search-icon" />
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Current Pollution Level in: <span id="city">...</span></h2>
+      <p id="pollution-level">Loading...</p>
+      <div class="data">
+        <h2>Latest Pollution Data:</h2>
+        <ul id="pollution-data">
+          <li>PM2.5: <span id="pm25">Loading...</span> µg/m³</li>
+          <li>PM10: <span id="pm10">Loading...</span> µg/m³</li>
+          <li>CO: <span id="co">Loading...</span> ppm</li>
+          <li>NO2: <span id="no2">Loading...</span> ppb</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div id="carouselExampleIndicators" class="carousel slide">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
+      </div>
+
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="./forest.webp" class="d-block w-100" alt="Nature Image" />
+        </div>
+        <div class="carousel-item">
+          <img src="./mountain.jpg" class="d-block w-100" alt="Nature Image" />
+        </div>
+        <div class="carousel-item">
+          <img src="./beach.jpg" class="d-block w-100" alt="Nature Image" />
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="Precautions">
+    <div class="container">
+      <div class="precautions">
+        <h2>Precautions to Control Pollution</h2>
+        <div class="precaution-item">
+          <h3>Avoid Smoking</h3>
+          <p>
+            Smoking contributes to air pollution. Avoid smoking indoors and in
+            areas with poor air circulation.
+          </p>
+        </div>
+        <div class="precaution-item">
+          <h3>Reduce Vehicle Emissions</h3>
+          <p>
+            Use public transportation, carpool, or choose eco-friendly
+            vehicles to reduce emissions.
+          </p>
+        </div>
+        <div class="precaution-item">
+          <h3>Conserve Energy</h3>
+          <p>
+            Use energy-efficient appliances and turn off lights and
+            electronics when not in use to reduce energy consumption.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    
+    <div id="output"></div>
+  </section>
+  <div class="querry">
+    <textarea placeholder=" Write a comment..." name="feedback" id="query" cols="40" rows="5"></textarea>
+    <br>
+    <p id="msg"></p>
+     <button id="submit">Submit</button>
+  </div>
+  <footer>
+    <p>&copy; 2024 Air Pollution Tracker. All rights reserved.</p>
+  </footer>
+  <script>
+    const apiKey = "648dc3ada0b05caf4e246a5b8dbc7cbc12030807f9f40c59b264fef93a5e799e";
+
+    function getPollutionData(city) {
+      const apiUrl = `https://api.ambeedata.com/latest/by-city?city=${encodeURIComponent(city)}`;
+      const options = {
+        method: "GET",
+        headers: {
+          "x-api-key": apiKey,
+          "Content-type": "application/json",
+        },
+      };
+
+      return fetch(apiUrl, options)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          // document.getElementById("pollution").innerText = `Air Quality: ${data.stations[0]}`;
+          return data;
+          // Process the data as needed
+          // Update pollution data elements in the HTML
+        })
+        .catch((error) => {
+          console.error("Error fetching pollution data:", error);
+          throw error; 
+        });
+    }
+
+    function getWeatherLatestByLatLong(lat, lng) {
+      const url = `https://api.ambeedata.com/weather/latest/by-lat-lng?lat=${lat}&lng=${lng}`;
+      const options = {
+        headers: {
+          "x-api-key": apiKey,
+          "Content-type": "application/json",
+        },
+      };
+
+      return fetch(url, options)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          // document.getElementById("weather").innerText = `Weather: ${data.temperature}°C`;
+          return data;
+          // Process the weather data as needed
+        })
+        .catch((error) => {
+          console.error("Error fetching weather data:", error);
+          throw error;
+        });
+    }
+
+    function getWeatherForecastByLatLong(lat, lng) {
+      const url = `https://api.ambeedata.com/weather/forecast/by-lat-lng?lat=${lat}&lng=${lng}`;
+      const options = {
+        headers: {
+          'x-api-key': apiKey,
+          'Content-type': 'application/json',
+        },
+      };
+
+      return fetch(url, options)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          // document.getElementById("weatherForcast").innerText = `Weather: ${data.temperature}°C`;
+          return data;
+        })
+        .catch((error) => {
+          console.error("Error fetching weather forecast data:", error);
+          throw error; 
+        });
+    }
+
+    async function fetchDataForCity() {
+      try {
+        const city = document.getElementById("cityInput").value;
+
+        const airQualityResponse = await getPollutionData(city);
+        const lat = airQualityResponse.stations[0].lat;
+        const lng = airQualityResponse.stations[0].lng;
+
+        const weatherLatestResponse = await getWeatherLatestByLatLong(lat, lng);
+        const weatherForecastResponse = await getWeatherForecastByLatLong(lat, lng);
+
+        // Display the JSON responses in the "output" div
+        displayResponse("Air Quality:", airQualityResponse);
+        displayResponse("Weather Latest:", weatherLatestResponse);
+        displayResponse("Weather Forecast:", weatherForecastResponse);
+      } catch (error) {
+        console.error("Error:", error.message);
+      
+      }
+    }
+
+    function displayResponse(label, data) {
+      const outputDiv = document.getElementById("output");
+      const responseDiv = document.createElement("div");
+      responseDiv.innerHTML = `<strong>${label}</strong><pre>${JSON.stringify(data, null, 2)}</pre>`;
+      outputDiv.appendChild(responseDiv);
+    }
+  </script>
+
+
+</body>
+
+</html>
